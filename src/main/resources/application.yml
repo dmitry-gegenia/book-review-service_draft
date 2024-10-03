@@ -21,6 +21,9 @@ spring:
     generate-ddl: false
   liquibase:
     change-log: classpath:liquibase/changelog.yml
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
   cloud:
     openfeign:
       client:

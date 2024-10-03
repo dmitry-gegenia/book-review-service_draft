@@ -1,6 +1,7 @@
 package com.book.review.service.config;
 
 import com.book.review.service.service.impl.UserDetailsServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -40,17 +41,23 @@ public class SecurityConfiguration {
                                 .permitAll()
                                 .requestMatchers(HttpMethod.POST, BASE_AUTH_URL + "/**")
                                 .permitAll()
-                                .requestMatchers(HttpMethod.POST, BASE_BOOKS_URL, BASE_REVIEWS_URL)
+                                .requestMatchers(HttpMethod.POST, BASE_REVIEWS_URL)
                                 .authenticated()
-                                .requestMatchers(HttpMethod.PUT, BASE_BOOKS_URL + "/**", BASE_REVIEWS_URL + "/**")
+                                .requestMatchers(HttpMethod.PUT, BASE_REVIEWS_URL + "/**")
                                 .authenticated()
-                                .requestMatchers(HttpMethod.DELETE, BASE_BOOKS_URL + "/**", BASE_REVIEWS_URL + "/**")
+                                .requestMatchers(HttpMethod.DELETE, BASE_REVIEWS_URL + "/**")
                                 .authenticated()
                                 .anyRequest().denyAll())
                 .formLogin(formLoginConfigurer ->
                         formLoginConfigurer
                                 .loginPage("/login")
                                 .permitAll())
+                .exceptionHandling(exceptionHandlingConfigurer ->
+                        exceptionHandlingConfigurer
+                                .accessDeniedHandler((request, response, accessDeniedException) ->
+                                        response.sendError(HttpServletResponse.SC_FORBIDDEN))
+                                .authenticationEntryPoint((request, response, authException) ->
+                                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED)))
                 .logout(logoutConfigurer ->
                         logoutConfigurer
                                 .logoutUrl("/logout")
