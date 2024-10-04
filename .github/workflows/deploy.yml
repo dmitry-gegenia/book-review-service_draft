@@ -1,4 +1,4 @@
-name: Deploy to AWS Elastic Beanstalk with Docker Compose
+name: Deploy to AWS Elastic Beanstalk
 
 on:
   push:
@@ -19,15 +19,16 @@ jobs:
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          region: ${{ secrets.AWS_REGION }}
+          registries: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
       - name: Build and push Docker Compose images
         env:
           ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          docker compose -f CI-CD/docker-compose.yml build
-          docker compose -f CI-CD/docker-compose.yml push
+          cd CI-CD
+          docker-compose -f docker-compose.yaml build
+          docker-compose -f docker-compose.yaml push
 
       - name: Deploy to Elastic Beanstalk
         env:
