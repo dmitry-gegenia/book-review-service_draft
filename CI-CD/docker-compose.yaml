@@ -25,7 +25,7 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile
-    image: book-review-service
+    image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/book-review-service:latest
     restart: always
     ports:
       - "8443:8443"
