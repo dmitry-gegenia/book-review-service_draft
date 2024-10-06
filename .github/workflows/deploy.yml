@@ -68,4 +68,4 @@ jobs:
         run: |
           eb init -p docker book-review-service --region $AWS_REGION
           eb use book-review-service-env
-          eb deploy --timeout 40
+          eb deploy --timeout 40 --version "Sample"
