@@ -33,6 +33,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
+      - name: Install Elastic Beanstalk CLI
+        run: |
+          sudo apt-get install -y python3-pip
+          pip3 install --upgrade awsebcli
+
       - name: Login to Amazon ECR
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v2
