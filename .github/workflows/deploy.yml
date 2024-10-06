@@ -28,6 +28,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Start Docker service
+        run: |
+          sudo service docker start
+
       - name: Install Docker Compose
         run: |
           sudo apt-get update
