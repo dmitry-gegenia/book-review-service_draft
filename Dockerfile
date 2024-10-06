@@ -8,4 +8,5 @@ RUN gradle clean build -x test
 FROM openjdk:17-alpine3.14
 WORKDIR /app
 COPY --from=builder /usr/test/src/book_reviews_service/build/libs/*.jar /app/book_reviews_service.jar
+EXPOSE 8081
 CMD ["java", "-jar", "-Dspring.profiles.active=default", "/app/book_reviews_service.jar"]

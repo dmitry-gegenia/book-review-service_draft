@@ -28,7 +28,7 @@ services:
     image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/book-review-service:latest
     restart: always
     ports:
-      - "8443:8443"
+      - "8081:8081"
     environment:
       SPRING_DATASOURCE_USERNAME: $AND_DB_USER
       SPRING_DATASOURCE_PASSWORD: $AND_DB_PASS
