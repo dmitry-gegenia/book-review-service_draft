@@ -69,7 +69,7 @@ dependencies {
 }
 
 bootJar {
-    archiveFileName = 'book-review-service-app.jar'
+    archiveFileName = 'book-reviews-service-app.jar'
 }
 
 jacoco {

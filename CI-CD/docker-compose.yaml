@@ -17,11 +17,11 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - book-review-service-net
+      - book-reviews-service-net
 
   book-review-service:
-    hostname: book-review-service
-    container_name: book-review-service
+    hostname: book-reviews-service
+    container_name: book-reviews-service
     build:
       context: ..
       dockerfile: Dockerfile
@@ -37,10 +37,10 @@ services:
       SPRING_LIQUIBASE_PASSWORD: $AND_DB_PASS
       SPRING_LIQUIBASE_URL: $AND_DB_URL
     networks:
-      - book-review-service-net
+      - book-reviews-service-net
 
 networks:
-  book-review-service-net:
+  book-reviews-service-net:
     name: book-local
     driver: bridge
 
