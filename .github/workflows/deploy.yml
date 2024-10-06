@@ -30,8 +30,9 @@ jobs:
 
       - name: Start Docker service
         run: |
-          sudo service docker start
-          docker info 
+          sudo systemctl start docker
+          sudo systemctl enable docker
+          docker info  # Проверка статуса Docker
 
       - name: Install Docker Compose
         run: |
