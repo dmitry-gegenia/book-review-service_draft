@@ -90,7 +90,7 @@ jacocoTestReport {
                             'com/book/review/service/model/**',
                             'com/book/review/service/config/**',
                             'com/book/review/service/interceptor/**',
-                            'com/book/review/service/BookServiceApplication.class',
+                            'com/book/review/service/BookReviewsServiceApplication.class',
                     ])
                 })
         )
