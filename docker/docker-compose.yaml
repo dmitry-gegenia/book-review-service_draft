@@ -20,8 +20,8 @@ services:
       - book-reviews-service-net
 
   book-review-service:
-    hostname: book-reviews-service
-    container_name: book-reviews-service
+    hostname: book-review-service
+    container_name: book-review-service
     build:
       context: ..
       dockerfile: Dockerfile
@@ -37,10 +37,10 @@ services:
       SPRING_LIQUIBASE_PASSWORD: $AND_DB_PASS
       SPRING_LIQUIBASE_URL: $AND_DB_URL
     networks:
-      - book-reviews-service-net
+      - book-review-service-net
 
 networks:
-  book-reviews-service-net:
+  book-review-service-net:
     name: book-local
     driver: bridge
 
