@@ -10,3 +10,4 @@ WORKDIR /app
 COPY --from=builder /usr/test/src/book-review-service/build/libs/*.jar /app/book-review-service.jar
 EXPOSE 8081
 CMD ["java", "-jar", "/app/book-review-service.jar"]
+# 
