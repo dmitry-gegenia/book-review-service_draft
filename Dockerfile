@@ -1,12 +1,12 @@
 # build stage
 FROM gradle:7.5.1-jdk17-alpine AS builder
-WORKDIR /usr/test/src/book-reviews-service
+WORKDIR /usr/test/src/book-review-service
 COPY . .
 RUN gradle clean build -x test
 
-#app package stage
+# app package stage
 FROM openjdk:17-alpine3.14
 WORKDIR /app
-COPY --from=builder /usr/test/src/book-reviews-service/build/libs/*.jar /app/book-reviews-service.jar
+COPY --from=builder /usr/test/src/book-review-service/build/libs/*.jar /app/book-review-service.jar
 EXPOSE 8081
-CMD ["java", "-jar", "-Dspring.profiles.active=default", "/app/book-reviews-service.jar"]
+CMD ["java", "-jar", "/app/book-review-service.jar"]

@@ -28,37 +28,23 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Start Docker service
-        run: |
-          sudo systemctl enable docker
-          sudo systemctl start docker
-          docker ps
-
-      - name: Install latest Docker Compose
-        run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose --version
-
       - name: Install Elastic Beanstalk CLI
         run: |
           sudo apt-get install -y python3-pip
           pip3 install --upgrade awsebcli
 
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/book-review-service:latest .
+
       - name: Login to Amazon ECR
-        id: ecr-login
         uses: aws-actions/amazon-ecr-login@v2
         with:
-          registries: ${{ secrets.AWS_ACCOUNT_ID }}
+          registries: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
-      - name: Build and push Docker Compose images
-        env:
-          ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-          AWS_REGION: ${{ secrets.AWS_REGION }}
+      - name: Push Docker image to Amazon ECR
         run: |
-          cd CI-CD
-          docker-compose -f docker-compose.yaml build
-          docker-compose -f docker-compose.yaml push
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/book-review-service:latest
 
       - name: Deploy to Elastic Beanstalk
         env:
@@ -66,6 +52,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          eb init -p docker book-reviews-service --region $AWS_REGION
-          eb use book-reviews-service-env
+          eb init -p docker book-review-service --region $AWS_REGION
+          eb use book-review-service-env
           eb deploy --timeout 40
