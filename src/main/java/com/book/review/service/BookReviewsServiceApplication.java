@@ -8,8 +8,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableFeignClients
 @ConfigurationPropertiesScan
-public class BookReviewServiceApplication {
+public class BookReviewsServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BookReviewServiceApplication.class, args);
+        SpringApplication.run(BookReviewsServiceApplication.class, args);
     }
 }
